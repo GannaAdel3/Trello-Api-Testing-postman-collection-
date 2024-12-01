@@ -1,0 +1,781 @@
+{
+	"info": {
+		"_postman_id": "71d2721a-c2dc-4e64-8af2-dc4757c374d6",
+		"name": "Trello",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28759214"
+	},
+	"item": [
+		{
+			"name": "create board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json()\r",
+							"var BoardID = responseBody.id\r",
+							"pm.collectionVariables.set(\"BoardID\",BoardID)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}1/boards/?name={{BoardName}}&key={{Key}}&token={{Token}}&defaultLists=false&prefs_background=pink",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{BoardName}}"
+						},
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						},
+						{
+							"key": "defaultLists",
+							"value": "false"
+						},
+						{
+							"key": "prefs_background",
+							"value": "pink"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Name is correct\", function () {\r",
+							"    pm.expect(pm.response.json().name).to.equal('Testing Board');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/boards/{{BoardID}}?key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"boards",
+						"{{BoardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/boards/{{BoardID}}?key={{Key}}&token={{Token}}&prefs/background=purple",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"boards",
+						"{{BoardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						},
+						{
+							"key": "prefs/background",
+							"value": "purple"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Label on a Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json()\r",
+							"var LabelID = responseBody.id\r",
+							"pm.collectionVariables.set(\"LabelID\",LabelID)\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/boards/{{BoardID}}/labels?name=Test&color=pink&key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"boards",
+						"{{BoardID}}",
+						"labels"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Test"
+						},
+						{
+							"key": "color",
+							"value": "pink"
+						},
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Labels on a Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Name is correct\", function () {\r",
+							"    pm.expect(pm.response.json().name).to.equal('Test');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/labels/{{LabelID}}?key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"labels",
+						"{{LabelID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Label",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/labels/{{LabelID}}}}?key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"labels",
+						"{{LabelID}}}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json()\r",
+							"var ListID = responseBody.id\r",
+							"pm.collectionVariables.set(\"ListID\",ListID)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/lists?name=Tasks&idBoard={{BoardID}}&key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Tasks"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{BoardID}}"
+						},
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Name is correct\", function () {\r",
+							"    pm.expect(pm.response.json().name).to.equal('Task One');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/lists/{{ListID}}?key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"lists",
+						"{{ListID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/lists/{{ListID}}?key={{Key}}&token={{Token}}&name=Task One",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"lists",
+						"{{ListID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						},
+						{
+							"key": "name",
+							"value": "Task One"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json()\r",
+							"var CardID = responseBody.id\r",
+							"pm.collectionVariables.set(\"CardID\",CardID)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/cards?idList={{ListID}}&key={{Key}}&token={{Token}}&name=ToDo",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "{{ListID}}"
+						},
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						},
+						{
+							"key": "name",
+							"value": "ToDo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Name is correct\", function () {\r",
+							"    pm.expect(pm.response.json().name).to.equal('ToDo');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/cards/{{CardID}}?key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"cards",
+						"{{CardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Checklist on a Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json()\r",
+							"var ChecklistID = responseBody.id\r",
+							"pm.collectionVariables.set(\"ChecklistID\",ChecklistID)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/cards/{{CardID}}/checklists?key={{Key}}&token={{Token}}&name=Work Done",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"cards",
+						"{{CardID}}",
+						"checklists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						},
+						{
+							"key": "name",
+							"value": "Work Done"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Checkitem on Checklist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json()\r",
+							"var CheckItemID = responseBody.id\r",
+							"pm.collectionVariables.set(\"CheckItemID\",CheckItemID)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}1/checklists/{{ChecklistID}}/checkItems?name=Task One&key={{Key}}&token={{Token}}",
+					"host": [
+						"{{URL}}1"
+					],
+					"path": [
+						"checklists",
+						"{{ChecklistID}}",
+						"checkItems"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Task One"
+						},
+						{
+							"key": "key",
+							"value": "{{Key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "Key",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "Token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "BoardID",
+			"value": ""
+		},
+		{
+			"key": "ListID",
+			"value": ""
+		},
+		{
+			"key": "BoardName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "LabelID",
+			"value": ""
+		},
+		{
+			"key": "CardID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ChecklistID",
+			"value": ""
+		},
+		{
+			"key": "CheckItemID",
+			"value": ""
+		}
+	]
+}
